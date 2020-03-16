@@ -13,7 +13,7 @@ from .color import *
 ##############################################
 ##############################################
 
-class LOGC(object):
+class LOGC(object): #TODO rename the class
     def __init__(self, file_name, prog_name, debug, gui=False):
         self.fileName = file_name
         self.progName = prog_name
