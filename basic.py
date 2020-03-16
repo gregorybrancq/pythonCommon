@@ -6,7 +6,7 @@ from os.path import expanduser
 import re
 import sys
 import random
-from .color import *
+from color import *
 
 
 ##############################################
@@ -108,7 +108,7 @@ def parseRange(rangestr):
                 else:
                     result.append(int(list2[0]))
     except:
-        parser.error(" There is a problem with your parsed options")
+        print(" There is a problem with your parsed options")
 
     return (result)
 
