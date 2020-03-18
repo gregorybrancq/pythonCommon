@@ -53,7 +53,7 @@ class ProgEnDis:
 
     # Enable procedure
     # delete (if existing) the disableFile
-    def progDisable(self):
+    def progEnable(self):
         self._setEnable()
         if os.path.isfile(self.disableFile):
             os.remove(self.disableFile)
@@ -61,7 +61,7 @@ class ProgEnDis:
 
     # Disable procedure
     # create the disableFile
-    def progEnable(self):
+    def progDisable(self):
         self._setDisable()
         fd = open(self.disableFile, 'w')
         fd.write(str(datetime.now()))
@@ -74,7 +74,7 @@ class ProgEnDis:
         else:
             # check if more than one day
             if self._checkFileDate():
-                self.progDisable()
+                self.progEnable()
             else:
                 self._setDisable()
 
