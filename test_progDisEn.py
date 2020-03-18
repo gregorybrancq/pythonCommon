@@ -12,12 +12,12 @@ class TestProgEnDis(TestCase):
 
     # Check that file is not present
     def test_set_enable(self):
-        self.modToTest.setEnable()
+        self.modToTest.progDisable()
         self.assertFalse(os.path.isfile(self.disableFile))
 
     # Check that file is present
     def test_set_disable(self):
-        self.modToTest.setDisable()
+        self.modToTest.progEnable()
         self.assertTrue(os.path.isfile(self.disableFile))
 
     # Check with a file created more than one day
@@ -26,6 +26,7 @@ class TestProgEnDis(TestCase):
         fd.write("2000-01-01 00:00:00.00000")
         fd.close()
         self.assertTrue(self.modToTest.isEnable())
+        self.assertFalse(os.path.isfile(self.disableFile))
 
     # Check with a file created less than one day
     def test_is_enable_with_less_than_one_day(self):

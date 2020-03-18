@@ -12,9 +12,9 @@ from datetime import datetime, timedelta
 
 class ProgEnDis:
     def __init__(self, disableFile):
-        self._enable = bool()
+        self._enable = bool() # Tool can be launched
+        self._justRemoveFile = False # To know if the file has just been deleted
         self.disableFile = disableFile  # Disable file name with path
-        self._checkDisableFile()
 
     def __str__(self):
         res = str()
@@ -51,6 +51,22 @@ class ProgEnDis:
             return True
         return False
 
+    # Enable procedure
+    # delete (if existing) the disableFile
+    def progDisable(self):
+        self._setEnable()
+        if os.path.isfile(self.disableFile):
+            os.remove(self.disableFile)
+            self._justRemoveFile = True
+
+    # Disable procedure
+    # create the disableFile
+    def progEnable(self):
+        self._setDisable()
+        fd = open(self.disableFile, 'w')
+        fd.write(str(datetime.now()))
+        fd.close()
+
     # Check if disableFile exists more than one day
     def _checkDisableFile(self):
         if not os.path.isfile(self.disableFile):
@@ -58,24 +74,13 @@ class ProgEnDis:
         else:
             # check if more than one day
             if self._checkFileDate():
-                self._setEnable()
+                self.progDisable()
             else:
                 self._setDisable()
 
-    # Enable procedure
-    # delete (if existing) the disableFile
-    def setEnable(self):
-        if os.path.isfile(self.disableFile):
-            os.remove(self.disableFile)
-        self._isEnable()
-
-    # Disable procedure
-    # create the disableFile
-    def setDisable(self):
-        fd = open(self.disableFile, 'w')
-        fd.write(str(datetime.now()))
-        fd.close()
-        self._setDisable()
+    # If the file has just been deleted
+    def isJustRemoveFile(self):
+        return self._justRemoveFile
 
     # Check if the disableFile exist
     # return true if it exists, false if it doesn't exist
