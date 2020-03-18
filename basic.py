@@ -201,7 +201,7 @@ def sendMail(From, To, Cc, Subject, MessageText, MessageHtml):
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
     from email.header import Header
-    from email import Charset
+    from email.charset import Charset
     from email.generator import Generator
 
     # Default encoding mode set to Quoted Printable. Acts globally!
