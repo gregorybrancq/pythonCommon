@@ -1,2 +1,2 @@
 # pythonCommon
-Basic command for python projects
+Basic commands for python projects
