@@ -39,7 +39,7 @@ def getBinDir():
 
 
 def getScriptDir():
-    return os.path.join(getHomeDir(), "Greg/work/env/scripts")
+    return os.path.join(getHomeDir(), "Greg/work/env/pythonCommon")
 
 
 def getEnvDir():
