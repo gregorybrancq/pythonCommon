@@ -11,10 +11,10 @@ from datetime import datetime, timedelta
 
 
 class ProgEnDis:
-    def __init__(self, disableFile):
-        self._enable = bool() # Tool can be launched
-        self._justRemoveFile = False # To know if the file has just been deleted
-        self.disableFile = disableFile  # Disable file name with path
+    def __init__(self, disable_file):
+        self._enable = bool()  # Tool can be launched
+        self._justRemoveFile = False  # To know if the file has just been deleted
+        self.disableFile = disable_file  # Disable file name with path
 
     def __str__(self):
         res = str()
@@ -41,13 +41,13 @@ class ProgEnDis:
     #  return False if < 1 day
     def _checkFileDate(self):
         fd = open(self.disableFile, 'r')
-        dateFileStr = fd.read().rstrip('\n')
-        try :
-            dateFileDT = datetime.strptime(dateFileStr, "%Y-%m-%d %H:%M:%S.%f")
-        except ValueError :
+        date_file_str = fd.read().rstrip('\n')
+        try:
+            date_file = datetime.strptime(date_file_str, "%Y-%m-%d %H:%M:%S.%f")
+        except ValueError:
             return True
-        currentDT = datetime.now()
-        if dateFileDT + timedelta(days=1) < currentDT:
+        current_date = datetime.now()
+        if date_file + timedelta(days=1) < current_date:
             return True
         return False
 
