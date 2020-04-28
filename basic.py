@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import os
-from os.path import expanduser
+import random
 import re
 import sys
-import random
+from os.path import expanduser
+
 from color import *
 
 
@@ -25,25 +26,26 @@ def sysKeybInt():
 def getUserLogin():
     try:
         return os.environ['USER']
-    except:
-        print color_error + 'Cannot get the login user\n'
-        sys.exit(-1)
+    except KeyError:
+        print('%sCannot get the login user\n' % color_error)
+        sys.exit(1)
 
 
 def getHomeDir():
-    return expanduser("~greg")
-
-
-def getBinDir():
-    return os.path.join(getHomeDir(), "Greg/work/env/bin")
-
-
-def getScriptDir():
-    return os.path.join(getHomeDir(), "Greg/work/env/pythonCommon")
+    return expanduser("~%s" % getUserLogin())
 
 
 def getEnvDir():
-    return os.path.join(getHomeDir(), "Greg/work/env")
+    return os.path.join(getHomeDir(), 'Greg', 'work', 'env')
+
+
+def getBinDir():
+    env = getEnvDir()
+    return os.path.join(getEnvDir(), "bin")
+
+
+def getCommonDir():
+    return os.path.join(getEnvDir(), "pythonCommon")
 
 
 def getLogDir():
