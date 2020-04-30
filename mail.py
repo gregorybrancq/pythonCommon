@@ -1,21 +1,21 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # Import smtplib for the actual sending function
 import smtplib
 # Import the email modules we'll need
-from cStringIO import StringIO
+from io import BytesIO
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.header import Header
-from email import Charset
+#from email import Charset
 from email.generator import Generator
 
 
 def sendMail(From, To, Subject, Cc=None, Message=None):
 
     # Default encoding mode set to Quoted Printable. Acts globally!
-    Charset.add_charset('utf-8', Charset.QP, Charset.QP, 'utf-8')
+    #Charset.add_charset('utf-8', Charset.QP, Charset.QP, 'utf-8')
     # 'alternative’ MIME type – HTML and plain text bundled in one e-mail message
     msg = MIMEMultipart('alternative')
     msg['Subject'] = Header(Subject, 'utf-8')
@@ -34,7 +34,7 @@ def sendMail(From, To, Subject, Cc=None, Message=None):
     # And here we have to instantiate a Generator object to convert the msg
     # object to a string (can't use msg.as_string, because that escapes
     # "From" lines).
-    io = StringIO()
+    io = BytesIO()
     g = Generator(io, False)  # second argument means "should I mangle From?"
     g.flatten(msg)
 
