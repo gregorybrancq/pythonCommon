@@ -35,8 +35,16 @@ def getHomeDir():
     return expanduser("~%s" % getUserLogin())
 
 
+def getWorkDir():
+    return os.path.join(getHomeDir(), 'Greg', 'work')
+
+
+def getConfigDir():
+    return os.path.join(getWorkDir(), 'config')
+
+
 def getEnvDir():
-    return os.path.join(getHomeDir(), 'Greg', 'work', 'env')
+    return os.path.join(getWorkDir(), 'env')
 
 
 def getBinDir():
