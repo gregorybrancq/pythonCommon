@@ -1,47 +1,50 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Import smtplib for the actual sending function
 import smtplib
-# Import the email modules we'll need
-from io import BytesIO
+from email import encoders
+from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.header import Header
-#from email import Charset
-from email.generator import Generator
 
 
-def sendMail(From, To, Subject, Cc=None, Message=None):
+def sendMail(from_user, to_user, subject, message, filename=None, cc_user=None, bcc_user=None):
+    # Create a multipart message and set headers
+    msg = MIMEMultipart()
+    msg['Subject'] = subject
+    msg['From'] = from_user
+    msg['To'] = to_user
+    msg['Cc'] = cc_user
+    msg['Bcc'] = bcc_user
 
-    # Default encoding mode set to Quoted Printable. Acts globally!
-    #Charset.add_charset('utf-8', Charset.QP, Charset.QP, 'utf-8')
-    # 'alternative’ MIME type – HTML and plain text bundled in one e-mail message
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = Header(Subject, 'utf-8')
-    # Only descriptive part of recipient and sender shall be encoded, not the email address
-    # msg['From'] = Header(From, 'utf-8')
-    msg['From'] = From
-    msg['To'] = To
-    msg['Cc'] = Cc
+    # Add body to email
+    msg.attach(MIMEText(message, 'plain'))
 
-    # Attach the parts with the given encodings.
-    #htmlpart = MIMEText(MessageHtml, 'html', 'UTF-8')
-    #msg.attach(htmlpart)
-    textpart = MIMEText(Message, 'plain', 'UTF-8')
-    msg.attach(textpart)
+    # Add file to email
+    if filename is not None:
+        # Open file in binary mode
+        with open(filename, "rb") as attachment:
+            # Add file as application/octet-stream
+            # Email client can usually download this automatically as attachment
+            part = MIMEBase("application", "octet-stream")
+            part.set_payload(attachment.read())
 
-    # And here we have to instantiate a Generator object to convert the msg
-    # object to a string (can't use msg.as_string, because that escapes
-    # "From" lines).
-    io = BytesIO()
-    g = Generator(io, False)  # second argument means "should I mangle From?"
-    g.flatten(msg)
+        # Encode file in ASCII characters to send by email
+        encoders.encode_base64(part)
 
-    # Send the message via our own SMTP server, but don't include the
-    # envelope header.
+        # Add header as key/value pair to attachment part
+        part.add_header(
+            "Content-Disposition",
+            f"attachment; filename= {filename}",
+        )
+
+        # Add attachment to message
+        msg.attach(part)
+
+    # Convert message to string
+    text = msg.as_string()
+
+    # Send the message via our own SMTP server, but don't include the envelope header.
     s = smtplib.SMTP('localhost')
-    s.sendmail(From, [To], io.getvalue())
+    s.sendmail(from_user, to_user, text)
     s.quit()
-
-

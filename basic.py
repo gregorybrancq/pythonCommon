@@ -25,10 +25,14 @@ def sysKeybInt():
 # User login
 def getUserLogin():
     try:
-        return os.environ['USER']
+        user = os.environ['USER']
     except KeyError:
         print('%sCannot get the login user\n' % color_error)
         sys.exit(1)
+    if user == "root" :
+        # tip to launch script with root user
+        user = "greg"
+    return user
 
 
 def getHomeDir():
