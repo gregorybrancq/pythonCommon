@@ -27,9 +27,10 @@ def getUserLogin():
     try:
         user = os.environ['USER']
     except KeyError:
-        print('%sCannot get the login user\n' % color_error)
-        sys.exit(1)
-    if user == "root" :
+        # if launch via crontab, there is no USER variable
+        user = "greg"
+        #print('%sCannot get the login user\n' % color_error)
+    if user == "root":
         # tip to launch script with root user
         user = "greg"
     return user
