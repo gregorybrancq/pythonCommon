@@ -29,7 +29,7 @@ def getUserLogin():
     except KeyError:
         # if launch via crontab, there is no USER variable
         user = "greg"
-        #print('%sCannot get the login user\n' % color_error)
+        # print('%sCannot get the login user\n' % color_error)
     if user == "root":
         # tip to launch script with root user
         user = "greg"
@@ -74,12 +74,12 @@ def humanSize(num):
 
 
 # Verify lock file
-def verify_lock_file(lockFile):
+def verify_lock_file(lock_file):
     timeout = 0
     # Verify that the lock file doesn't exist
-    while os.path.isfile(lockFile):
+    while os.path.isfile(lock_file):
         if timeout > 200:
-            remove_lock_file(lockFile)
+            remove_lock_file(lock_file)
             break
         else:
             import time
@@ -88,20 +88,16 @@ def verify_lock_file(lockFile):
 
 
 # Create lock file
-def create_lock_file(lockFile):
+def create_lock_file(lock_file):
     # Verify that the lock file doesn't exist
-    verify_lock_file(lockFile)
+    verify_lock_file(lock_file)
     # Create it.
-    os.system('touch ' + lockFile)
+    os.system('touch ' + lock_file)
 
 
 # Delete lock file
-def remove_lock_file(lockFile):
-    # Remove lock file
-    try:
-        os.remove(lockFile)
-    except:
-        pass
+def remove_lock_file(lock_file):
+    os.remove(lock_file)
 
 
 # Random number
@@ -110,11 +106,11 @@ def getRandomSeed():
 
 
 # Create a integer range
-def parseRange(rangestr):
+def parseRange(range_str):
     result = list()
     try:
-        if rangestr != "":
-            list0 = rangestr.split(",")
+        if range_str != "":
+            list0 = range_str.split(",")
             for list1 in list0:
                 list2 = list1.split("-")
                 if len(list2) == 2:  # range found
@@ -129,14 +125,14 @@ def parseRange(rangestr):
 
 
 # Determine if the file is executable.
-def filetest_exe(file):
+def test_file_exe(file):
     """Determine if the file is executable."""
     if not os.path.exists(file):
         return 0
     stat = os.path.stat
-    statinfo = os.stat(file)
-    mode = stat.S_IMODE(statinfo[stat.ST_MODE])
-    if ((stat.S_IXUSR & mode) or (stat.S_IXGRP & mode) or (stat.S_IXOTH & mode)):
+    stat_info = os.stat(file)
+    mode = stat.S_IMODE(stat_info[stat.ST_MODE])
+    if (stat.S_IXUSR & mode) or (stat.S_IXGRP & mode) or (stat.S_IXOTH & mode):
         return True
     return False
 
@@ -155,47 +151,4 @@ def remove_dir_file(path):
 def move_files(old_path, new_path):
     list_files = os.listdir(old_path)
     for file in list_files:
-        try:
-            os.rename(os.path.join(old_path, file), os.path.join(new_path, file))
-        except:
-            pass
-
-
-def addFile(log, header, fileName, extAuth, typeList, warnNb):
-    log.info(header, "In  addFile fileName=" + str(fileName))
-    dirN = os.path.dirname(fileName)
-    dirN1 = dirN.replace('(', '\(')
-    dirN2 = dirN1.replace(')', '\)')
-    fileNameWoDir = re.sub(dirN2 + "\/", '', fileName)
-    (fileN, extN) = os.path.splitext(fileNameWoDir)
-    if extAuth.__contains__(extN):
-        log.info(header, "In  addFile dirN=" + str(dirN) + ", fileN=" + str(fileN) + ", extN=" + str(extN))
-        typeList.append([dirN, fileN, extN])
-        return (typeList, warnNb)
-    else:
-        warnNb += 1
-        log.warn(header, "In  addFile file " + str(fileNameWoDir) + " is not a good extension as " + str(extAuth))
-        return (typeList, warnNb)
-
-
-def listFromArgs(log, header, args, ext):
-    log.info(header, "In  listFromArgs")
-    typeList = list()
-    warnNb = 0
-
-    if (len(args) != 0):
-        for arg in args:
-            # arg.encode('latin1')
-            if (os.path.isdir(arg)):
-                log.info(header, "In  listFromArgs dir=" + str(arg))
-                for dirpath, dirnames, filenames in os.walk(arg):
-                    for filename in filenames:
-                        (typeList, warnNb) = addFile(log, header, os.path.join(dirpath, filename), ext, typeList,
-                                                     warnNb)
-
-            elif (os.path.isfile(arg)):
-                log.info(header, "In  listFromArgs file=" + str(arg))
-                (typeList, warnNb) = addFile(log, header, arg, ext, typeList, warnNb)
-
-    log.info(header, "Out listFromArgs typeList=" + str(typeList))
-    return typeList, warnNb
+        os.rename(os.path.join(old_path, file), os.path.join(new_path, file))
