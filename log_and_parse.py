@@ -4,10 +4,10 @@
 """
 Common functions used for each file
 """
-import os
-from optparse import OptionParser
 import logging
+import os
 from logging.handlers import RotatingFileHandler
+from optparse import OptionParser
 
 from basic import getLogDir
 
@@ -49,11 +49,9 @@ def createLog(log_name, parsed_args):
         logger.addHandler(ch)
     return logger
 
-
 # command application
 # logger.debug('debug message')
 # logger.info('info message')
 # logger.warning('warn message')
 # logger.error('error message')
 # logger.critical('critical message')
-

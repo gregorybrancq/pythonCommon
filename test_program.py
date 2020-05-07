@@ -1,6 +1,6 @@
 import os
-from unittest import TestCase
 from datetime import datetime, timedelta
+from unittest import TestCase
 
 from program import Program
 
