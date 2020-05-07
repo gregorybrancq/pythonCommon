@@ -7,8 +7,8 @@
     - enable or disable it for one day
     - launch it only once a day
 """
-import os
 import logging
+import os
 import sys
 from datetime import date, datetime, timedelta
 
@@ -145,7 +145,6 @@ class Program:
             return "The program can be launched."
         else:
             return "The program is currently disabled."
-
 
     #
     # Config part
