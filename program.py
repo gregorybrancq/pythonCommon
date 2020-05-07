@@ -135,6 +135,18 @@ class Program:
         fd.write(str(datetime.now()))
         fd.close()
 
+    def getInfo(self):
+        """
+        Return the status
+
+        :return: if program can be launched or not.
+        """
+        if self.isEnable():
+            return "The program can be launched."
+        else:
+            return "The program is currently disabled."
+
+
     #
     # Config part
     #
