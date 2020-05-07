@@ -2,13 +2,13 @@ import os
 from unittest import TestCase
 from datetime import datetime, timedelta
 
-from progDisEn import ProgEnDis
+from program import Program
 
 
-class TestProgEnDis(TestCase):
+class TestProgram(TestCase):
     def setUp(self):
-        self.disable_file = "/tmp/test_progDisEn"
-        self.modToTest = ProgEnDis(disable_file=self.disable_file)
+        self.disable_file = "/tmp/test_program.disable"
+        self.modToTest = Program(prog_name="test_program")
 
     # Check that file is not present
     def test_set_enable(self):
@@ -31,8 +31,8 @@ class TestProgEnDis(TestCase):
     # Check with a file created less than one day
     def test_is_enable_with_less_than_one_day(self):
         fd = open(self.disable_file, 'w')
-        dateMinusOneHour = datetime.now() - timedelta(hours=1)
-        fd.write(str(dateMinusOneHour))
+        date_minus_one_hour = datetime.now() - timedelta(hours=1)
+        fd.write(str(date_minus_one_hour))
         fd.close()
         self.assertFalse(self.modToTest.isEnable())
         self.assertTrue(os.path.isfile(self.disable_file))
