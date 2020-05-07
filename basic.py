@@ -3,7 +3,6 @@
 
 import os
 import random
-import re
 import sys
 from os.path import expanduser
 
@@ -11,9 +10,7 @@ from color import *
 
 
 ##############################################
-##############################################
-#             BASIC FUNCTIONS               ##
-##############################################
+# Basic functions
 ##############################################
 
 # Exit when receiving an exception
