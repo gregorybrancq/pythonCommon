@@ -24,7 +24,6 @@ class Program:
         else:
             log_name = '.'.join([prog_name, __name__])
         self.logCP = logging.getLogger(log_name)
-        self.logCP.debug("In init CheckProgram")
         self.prog_name = prog_name
         self.config_file = config_file
         self._enable_program = bool()  # Program can be launched
@@ -142,7 +141,7 @@ class Program:
         :return: if program can be launched or not.
         """
         if self.isEnable():
-            return "The program can be launched."
+            return "The program could be launched."
         else:
             return "The program is currently disabled."
 
