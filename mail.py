@@ -10,7 +10,10 @@ from email.mime.text import MIMEText
 
 def sendMail(from_user, to_user, subject, message, filename=None, cc_user=None, bcc_user=None):
     # Create a multipart message and set headers
-    msg = MIMEMultipart()
+    if filename :
+        msg = MIMEMultipart('mixed')
+    else :
+        msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
     msg['From'] = from_user
     msg['To'] = to_user
