@@ -130,10 +130,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-Supprimerait .idea/
-Supprimerait .idea/.gitignore
-Supprimerait .idea/inspectionProfiles/
-Supprimerait .idea/misc.xml
-Supprimerait .idea/modules.xml
-Supprimerait .idea/pythonCommon.iml
-Supprimerait .idea/vcs.xml
+# Pycharm
+.idea/
+
