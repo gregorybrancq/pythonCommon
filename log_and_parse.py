@@ -22,6 +22,13 @@ def parsingLine():
         default=False,
         help="Display all debug information"
     )
+    parser.add_option(
+        "--dry-run",
+        action="store_true",
+        dest="dryRun",
+        default=False,
+        help="Don't execute the processus"
+    )
     return parser.parse_args()
 
 
