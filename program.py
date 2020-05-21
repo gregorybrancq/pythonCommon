@@ -72,7 +72,9 @@ class Program:
 
     def _isEnable(self):
         if self._enable_program:
+            self.logCP.debug("Enable file is not present")
             return True
+        self.logCP.debug("Enable file is present")
         return False
 
     def _checkFileDate(self):
