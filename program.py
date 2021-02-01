@@ -43,7 +43,7 @@ class Program:
         if not (os.path.isfile(self.running_file)):
             self.logCP.debug("Running file is not present")
             return False
-        self.logCP.debug("Running file is present")
+        self.logCP.debug("Running file is present : %s" % self.running_file)
         return True
 
     def startRunning(self):
@@ -155,7 +155,7 @@ class Program:
     def isJustRemoveFile(self):
         return self._justRemoveFile
 
-    def isLaunchedToday(self):
+    def isLaunchedLastDays(self, days=1):
         """
         Is the program launched today ?
 
@@ -185,11 +185,11 @@ class Program:
 
             # Compare date to current date
             self.logCP.debug("today_datetime = %s, config_date = %s" % (str(today_datetime), str(config_date)))
-            if today_datetime == config_date:
-                self.logCP.info("Already launched today")
+            if config_date + timedelta(days=7) > today_datetime:
+                self.logCP.info("Already launched during the last %s days" % days)
                 return True
             else:
-                self.logCP.info("Not launched today")
+                self.logCP.info("Not launched during the last %s days" % days)
                 return False
 
     def runToday(self):
@@ -208,4 +208,4 @@ class Program:
         self.logCP.debug("Create config file (%s) with date = %s" % (self.config_file, today_str))
         fd.write(today_str)
         fd.close()
-        os.chown(self.config_file, 1000, 1000)
+        #os.chown(self.config_file, 1000, 1000)
